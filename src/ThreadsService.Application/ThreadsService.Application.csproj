@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ThreadsService.Domain\ThreadsService.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
