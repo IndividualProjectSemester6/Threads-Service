@@ -15,10 +15,8 @@ namespace ThreadsService.Application.Commands.CreateThread
 
         public Task<ThreadDto> Handle(CreateThreadCommand request, CancellationToken cancellationToken)
         {
-            request.Thread.Id = Guid.NewGuid();
-            request.Thread.CreatedAt = DateTime.Now;
-            request.Thread.LastEdited = DateTime.Now;
-            var result = _repository.CreateThread(request.Thread);
+            var thread = new ThreadDto(Guid.NewGuid(), request.TopicName, request.Content, request.Author, DateTime.UtcNow, DateTime.UtcNow);
+            var result = _repository.CreateThread(thread);
             return result;
         }
     }

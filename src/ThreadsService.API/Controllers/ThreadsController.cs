@@ -50,7 +50,7 @@ public class ThreadsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> Create(CreateThreadViewModel createThreadViewModel)
     {
-        var query = new CreateThreadCommand(new ThreadDto() {Author = createThreadViewModel.Author, TopicName = createThreadViewModel.TopicName, Content = createThreadViewModel.Content});
+        var query = new CreateThreadCommand(createThreadViewModel.Author, createThreadViewModel.TopicName, createThreadViewModel.Content);
         var result = await _mediator.Send(query);
         if (result == null) return BadRequest();
 

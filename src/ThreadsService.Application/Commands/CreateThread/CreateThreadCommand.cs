@@ -5,11 +5,15 @@ namespace ThreadsService.Application.Commands.CreateThread
 {
     public class CreateThreadCommand : IRequest<ThreadDto>
     {
-        public ThreadDto Thread { get; }
+        public string Author { get; }
+        public string TopicName { get; }
+        public string Content { get; }
 
-        public CreateThreadCommand(ThreadDto thread)
+        public CreateThreadCommand(string author, string topicName, string content)
         {
-            Thread = thread;
+            Author = author;
+            TopicName = topicName;
+            Content = content;
         }
     }
 }
