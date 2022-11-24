@@ -24,9 +24,9 @@ namespace ThreadsService.Infrastructure.Repositories
             return await _dbContext.Threads.ToListAsync();
         }
 
-        public Task<ThreadDto?> Get(Guid id)
+        public async Task<ThreadDto?> Get(Guid id)
         {
-            throw new NotImplementedException();
+            return await _dbContext.Threads.FindAsync(id);
         }
     }
 }

@@ -17,7 +17,8 @@ builder.Services.AddSwaggerGen();
 // MediatR dependencies:
 builder.Services.AddMediatR(new Type[]
 {
-    typeof(QueriesMediatR.GetAllThreads.GetAllThreadsQuery)
+    typeof(QueriesMediatR.GetAllThreads.GetAllThreadsQuery),
+    typeof(QueriesMediatR.GetThread.GetThreadQuery)
 });
 
 // Dependency injection:

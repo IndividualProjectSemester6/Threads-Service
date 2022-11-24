@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ThreadsService.API.Models;
 using ThreadsService.Application.Queries.GetAllThreads;
+using ThreadsService.Application.Queries.GetThread;
 
 namespace ThreadsService.API.Controllers
 {
@@ -28,6 +29,20 @@ namespace ThreadsService.API.Controllers
             }
 
             return Ok(threads);    
+        }
+
+        [HttpGet("{threadId}")]
+        public async Task<ActionResult> Get(Guid threadId)
+        {
+            var query = new GetThreadQuery(threadId);
+            var result = await _mediator.Send(query);
+            if (result != null)
+            {
+                var thread = new ThreadViewModel(result.Id, result.TopicName, result.Content, result.Author, result.CreatedAt, result.LastEdited);
+                return Ok(result);
+            }
+
+            return NotFound();
         }
     }
 }
