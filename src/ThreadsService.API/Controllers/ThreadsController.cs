@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ThreadsService.API.Models;
 using ThreadsService.Application.Commands.CreateThread;
+using ThreadsService.Application.Commands.UpdateThread;
 using ThreadsService.Application.Queries.GetAllThreads;
 using ThreadsService.Application.Queries.GetThread;
 using ThreadsService.Domain.Entities;
@@ -53,6 +54,17 @@ public class ThreadsController : ControllerBase
         var query = new CreateThreadCommand(createThreadViewModel.Author, createThreadViewModel.TopicName, createThreadViewModel.Content);
         var result = await _mediator.Send(query);
         if (result == null) return BadRequest();
+
+        return Ok(result);
+    }
+
+    [HttpPut("{threadId}")]
+    public async Task<ActionResult> Update(Guid threadId, UpdateThreadViewModel updateThread)
+    {
+        var thread = new ThreadDto() {TopicName = updateThread.TopicName, Content = updateThread.Content};
+        var query = new UpdateThreadCommand(threadId, thread);
+        var result = await _mediator.Send(query);
+        if (result == null) return NotFound();
 
         return Ok(result);
     }

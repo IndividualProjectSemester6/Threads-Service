@@ -1,4 +1,5 @@
-﻿using ThreadsService.Application.Interfaces.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using ThreadsService.Application.Interfaces.Repositories;
 using ThreadsService.Domain.Entities;
 using ThreadsService.Infrastructure.Contexts;
 
@@ -25,9 +26,15 @@ namespace ThreadsService.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<ThreadDto?> UpdateThread(ThreadDto thread)
+        public async Task<ThreadDto?> UpdateThread(ThreadDto thread)
         {
-            throw new NotImplementedException();
+            var existing = await _dbContext.Threads.FindAsync(thread.Id);
+            if (existing == null) return null;
+            existing.TopicName = thread.TopicName;
+            existing.Content = thread.Content;
+            existing.LastEdited = thread.LastEdited;
+            await _dbContext.SaveChangesAsync();
+            return existing;
         }
     }
 }
