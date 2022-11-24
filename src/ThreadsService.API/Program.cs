@@ -4,6 +4,7 @@ using ThreadsService.Application.Interfaces.Repositories;
 using ThreadsService.Infrastructure.Contexts;
 using ThreadsService.Infrastructure.Repositories;
 using QueriesMediatR = ThreadsService.Application.Queries;
+using CommandsMediatR = ThreadsService.Application.Commands;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,11 +19,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(new Type[]
 {
     typeof(QueriesMediatR.GetAllThreads.GetAllThreadsQuery),
-    typeof(QueriesMediatR.GetThread.GetThreadQuery)
+    typeof(QueriesMediatR.GetThread.GetThreadQuery),
+    typeof(CommandsMediatR.CreateThread.CreateThreadCommand)
 });
 
 // Dependency injection:
 builder.Services.AddScoped<IQueryThreadRepository, QueryThreadRepository>();
+builder.Services.AddScoped<ICommandThreadRepository, CommandThreadRepository>();
 
 
 ConfigurationManager configuration = builder.Configuration;

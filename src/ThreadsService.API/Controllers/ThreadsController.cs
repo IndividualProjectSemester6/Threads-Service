@@ -1,8 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ThreadsService.API.Models;
+using ThreadsService.Application.Commands;
+using ThreadsService.Application.Commands.CreateThread;
 using ThreadsService.Application.Queries.GetAllThreads;
 using ThreadsService.Application.Queries.GetThread;
+using ThreadsService.Domain.Entities;
 
 namespace ThreadsService.API.Controllers
 {
@@ -39,10 +42,20 @@ namespace ThreadsService.API.Controllers
             if (result != null)
             {
                 var thread = new ThreadViewModel(result.Id, result.TopicName, result.Content, result.Author, result.CreatedAt, result.LastEdited);
-                return Ok(result);
+                return Ok(thread);
             }
 
             return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Create(CreateThreadViewModel createThreadViewModel)
+        {
+            var query = new CreateThreadCommand(new ThreadDto() {Author = createThreadViewModel.Author, TopicName = createThreadViewModel.TopicName, Content = createThreadViewModel.Content});
+            var result = await _mediator.Send(query);
+            if (result == null) return BadRequest();
+
+            return Ok(result);
         }
     }
 }
