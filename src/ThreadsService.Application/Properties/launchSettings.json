@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "ThreadsService.Application": {
+      "commandName": "Project"
+    },
+    "ThreadsService.API": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\calin\\Bureaublad\\Fontys\\Semester 6\\Individueel\\Development and Operations\\Kinoroom\\ThreadsService\\src\\ThreadsService.API"
+    }
+  }
+}

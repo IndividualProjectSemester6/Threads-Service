@@ -13,11 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ThreadsService.Application\ThreadsService.Application.csproj" />
     <ProjectReference Include="..\ThreadsService.Domain\ThreadsService.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Repositories\" />
   </ItemGroup>
 
 </Project>
