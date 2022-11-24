@@ -22,6 +22,7 @@ builder.Services.AddMediatR(new Type[]
     typeof(QueriesMediatR.GetThread.GetThreadQuery),
     typeof(CommandsMediatR.CreateThread.CreateThreadCommand),
     typeof(CommandsMediatR.UpdateThread.UpdateThreadCommand),
+    typeof(CommandsMediatR.DeleteThread.DeleteThreadCommand)
 });
 
 // Dependency injection:

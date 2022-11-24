@@ -2,6 +2,7 @@
 using ThreadsService.Application.Interfaces.Repositories;
 using ThreadsService.Domain.Entities;
 using ThreadsService.Infrastructure.Contexts;
+using Z.EntityFramework.Plus;
 
 namespace ThreadsService.Infrastructure.Repositories
 {
@@ -21,9 +22,11 @@ namespace ThreadsService.Infrastructure.Repositories
             return thread;
         }
 
-        public Task<ThreadDto?> DeleteThread(Guid id)
+        public async Task<ThreadDto?> DeleteThread(Guid id)
         {
-            throw new NotImplementedException();
+            var thread = await _dbContext.Threads.FindAsync(id);
+            await Task.WhenAll(_dbContext.Threads.Where(m => m.Id == id).DeleteAsync(), _dbContext.SaveChangesAsync());
+            return thread;
         }
 
         public async Task<ThreadDto?> UpdateThread(ThreadDto thread)

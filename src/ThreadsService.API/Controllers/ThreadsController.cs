@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ThreadsService.API.Models;
 using ThreadsService.Application.Commands.CreateThread;
+using ThreadsService.Application.Commands.DeleteThread;
 using ThreadsService.Application.Commands.UpdateThread;
 using ThreadsService.Application.Queries.GetAllThreads;
 using ThreadsService.Application.Queries.GetThread;
@@ -67,5 +68,15 @@ public class ThreadsController : ControllerBase
         if (result == null) return NotFound();
 
         return Ok(result);
+    }
+
+    [HttpDelete("{threadId}")]
+    public async Task<ActionResult> Delete(Guid threadId)
+    {
+        var query = new DeleteThreadCommand(threadId);
+        var result = await _mediator.Send(query);
+        if (result == null) return BadRequest();
+
+        return Ok();
     }
 }
