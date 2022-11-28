@@ -4,6 +4,7 @@ using ThreadsService.API.Models;
 using ThreadsService.Application.Commands.CreateThread;
 using ThreadsService.Application.Commands.DeleteThread;
 using ThreadsService.Application.Commands.UpdateThread;
+using ThreadsService.Application.Notifications.PostCreated;
 using ThreadsService.Application.Queries.GetAllThreads;
 using ThreadsService.Application.Queries.GetThread;
 using ThreadsService.Domain.Entities;
@@ -54,7 +55,19 @@ public class ThreadsController : ControllerBase
     {
         var query = new CreateThreadCommand(createThreadViewModel.Author, createThreadViewModel.TopicName, createThreadViewModel.Content);
         var result = await _mediator.Send(query);
+
         if (result == null) return BadRequest();
+
+        await _mediator.Publish(new ThreadCreatedNotification()
+        {
+            Id = result.Id,
+            ForumId = Guid.Empty,
+            TopicName = result.TopicName,
+            Content = result.Content,
+            Author = result.Author,
+            CreatedAt = result.CreatedAt,
+            LastEdited = result.LastEdited
+        });
 
         return Ok(result);
     }
