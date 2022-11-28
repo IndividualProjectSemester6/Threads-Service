@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace ThreadsService.Application.Notifications.PostCreated
+namespace ThreadsService.Application.Notifications.ThreadCreated
 {
     public record ThreadCreatedNotification : INotification
     {

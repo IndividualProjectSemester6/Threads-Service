@@ -5,6 +5,7 @@ using ThreadsService.Application.Commands.CreateThread;
 using ThreadsService.Application.Commands.DeleteThread;
 using ThreadsService.Application.Commands.UpdateThread;
 using ThreadsService.Application.Notifications.PostCreated;
+using ThreadsService.Application.Notifications.ThreadCreated;
 using ThreadsService.Application.Queries.GetAllThreads;
 using ThreadsService.Application.Queries.GetThread;
 using ThreadsService.Domain.Entities;
