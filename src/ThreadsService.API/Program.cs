@@ -35,7 +35,7 @@ ConfigurationManager configuration = builder.Configuration;
 builder.Services.AddDbContext<ThreadDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("AzureConnection"),
     b => b.MigrationsAssembly("ThreadsService.API").EnableRetryOnFailure()));
 
-// Add & configure RabbitMQ:
+// Add RabbitMQ connection:
 builder.Services.AddMassTransit(x =>
 {
     x.UsingRabbitMq((context, cfg) =>
@@ -48,6 +48,21 @@ builder.Services.AddMassTransit(x =>
 
         cfg.ConfigureEndpoints(context);
     });
+});
+
+// Configure RabbitMQ options
+builder.Services.AddOptions<MassTransitHostOptions>().Configure(options =>
+{
+    // Below are the config defaults for RabbitMQ
+
+    // Waits until bus is started:
+    options.WaitUntilStarted = true;
+
+    // Limit wait time when starting the bus:
+    options.StartTimeout = TimeSpan.FromSeconds(10);
+
+    // Limit wait time when stopping the bus:
+    options.StopTimeout = TimeSpan.FromSeconds(30);
 });
 
 //builder.Services.AddHostedService<Worker>();
