@@ -1,3 +1,4 @@
+using MassTransit;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ThreadsService.Application.Interfaces.Repositories;
@@ -33,6 +34,23 @@ builder.Services.AddScoped<ICommandThreadRepository, CommandThreadRepository>();
 ConfigurationManager configuration = builder.Configuration;
 builder.Services.AddDbContext<ThreadDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("AzureConnection"),
     b => b.MigrationsAssembly("ThreadsService.API").EnableRetryOnFailure()));
+
+// Add & configure RabbitMQ:
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        cfg.Host("host.docker.internal", "/", h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });
+
+        cfg.ConfigureEndpoints(context);
+    });
+});
+
+//builder.Services.AddHostedService<Worker>();
 
 var app = builder.Build();
 
