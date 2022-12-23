@@ -1,3 +1,4 @@
+using MassTransit;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using ThreadsService.Application.Interfaces.Repositories;
@@ -33,6 +34,43 @@ builder.Services.AddScoped<ICommandThreadRepository, CommandThreadRepository>();
 ConfigurationManager configuration = builder.Configuration;
 builder.Services.AddDbContext<ThreadDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("AzureConnection"),
     b => b.MigrationsAssembly("ThreadsService.API").EnableRetryOnFailure()));
+
+// Add RabbitMQ connection:
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq((context, cfg) =>
+    {
+        var hostname = configuration.GetValue<string>("MessageBroker:Host");
+        var vhost = configuration.GetValue<string>("MessageBroker:Vhost");
+        var username = configuration.GetValue<string>("MessageBroker:Username");
+        var password = configuration.GetValue<string>("MessageBroker:Password");
+
+        cfg.Host(hostname, vhost, h =>
+        {
+            h.Username(username);
+            h.Password(password);
+        });
+
+        cfg.ConfigureEndpoints(context);
+    });
+});
+
+// Configure RabbitMQ options
+builder.Services.AddOptions<MassTransitHostOptions>().Configure(options =>
+{
+    // Below are the config defaults for RabbitMQ
+
+    // Waits until bus is started:
+    options.WaitUntilStarted = true;
+
+    // Limit wait time when starting the bus:
+    options.StartTimeout = TimeSpan.FromSeconds(10);
+
+    // Limit wait time when stopping the bus:
+    options.StopTimeout = TimeSpan.FromSeconds(30);
+});
+
+//builder.Services.AddHostedService<Worker>();
 
 var app = builder.Build();
 
