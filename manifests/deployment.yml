@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: threads-api
-          image: localhost:5002/threadsservice:latest
+          image: kinoroomregistry.azurecr.io/thread_api:latest
           imagePullPolicy: IfNotPresent
           ports:
           - containerPort: 80
