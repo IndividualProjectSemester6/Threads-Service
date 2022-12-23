@@ -52,8 +52,8 @@ jobs:
     name: K6 Load Test
     #needs: [build-docker-local]
     #runs-on: self-hosted
-    runs-on: windows-latest
+    runs-on: self-hosted
     steps:
       - name: Setup environment
         id: k6-load-test
-        run: ./scripts/run_load_test.ps1
+        run: C:\Users\calin\Bureaublad\Fontys\Semester 6\Individueel\Development and Operations\Kinoroom\ThreadsService\scripts\run_load_test.ps1
