@@ -56,6 +56,4 @@ jobs:
       - name: Setup environment
         id: k6-load-test
         shell: powershell
-        run: |
-          echo ${env:PATH}
-          ./scripts/run_load_test
+        run: ./scripts/run_load_test.ps1
