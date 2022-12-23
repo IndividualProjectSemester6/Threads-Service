@@ -54,4 +54,4 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Setup environment
-        run: ./scripts/run_load_test.ps1
+        run: ./scripts/run_load_test
