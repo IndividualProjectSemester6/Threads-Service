@@ -15,4 +15,8 @@
     <ProjectReference Include="..\ThreadsService.Domain\ThreadsService.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Shared\" />
+  </ItemGroup>
+
 </Project>

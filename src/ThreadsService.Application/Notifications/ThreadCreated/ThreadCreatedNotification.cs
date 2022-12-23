@@ -1,15 +1,11 @@
 ﻿using MediatR;
 
-namespace ThreadsService.Application.Notifications.ThreadCreated
+// Namespace is different from the other code because RabbitMQ requires even the namespaces to be identical for the messages. :)
+namespace Shared.Events
 {
     public record ThreadCreatedNotification : INotification
     {
         public Guid Id { get; init; }
         public Guid ForumId { get; init; }
-        public string TopicName { get; init; }
-        public string Content { get; init; }
-        public string Author { get; init; }
-        public DateTime CreatedAt { get; init; }
-        public DateTime LastEdited { get; init; }
     }
 }

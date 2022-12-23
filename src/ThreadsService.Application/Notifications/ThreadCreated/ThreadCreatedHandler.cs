@@ -1,8 +1,8 @@
 ﻿using MassTransit;
 using MediatR;
-using ThreadsService.Application.Notifications.ThreadCreated;
+using Shared.Events;
 
-namespace ThreadsService.Application.Notifications.PostCreated;
+namespace ThreadsService.Application.Notifications.ThreadCreated;
 
 public class ThreadCreatedHandler : INotificationHandler<ThreadCreatedNotification>
 {
@@ -20,11 +20,6 @@ public class ThreadCreatedHandler : INotificationHandler<ThreadCreatedNotificati
         {
             Id = notification.Id,
             ForumId = notification.ForumId,
-            TopicName = notification.TopicName,
-            Content = notification.Content,
-            Author = notification.Author,
-            CreatedAt = notification.CreatedAt,
-            LastEdited = notification.LastEdited
         }, context =>
         {
             context.CorrelationId = notification.ForumId;

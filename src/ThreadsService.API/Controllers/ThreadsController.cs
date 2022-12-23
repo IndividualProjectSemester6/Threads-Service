@@ -1,11 +1,10 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Events;
 using ThreadsService.API.Models;
 using ThreadsService.Application.Commands.CreateThread;
 using ThreadsService.Application.Commands.DeleteThread;
 using ThreadsService.Application.Commands.UpdateThread;
-using ThreadsService.Application.Notifications.PostCreated;
-using ThreadsService.Application.Notifications.ThreadCreated;
 using ThreadsService.Application.Queries.GetAllThreads;
 using ThreadsService.Application.Queries.GetThread;
 using ThreadsService.Domain.Entities;
@@ -31,7 +30,7 @@ public class ThreadsController : ControllerBase
         List<ThreadViewModel> threads = new List<ThreadViewModel>();
         foreach (var thread in result)
         {
-            threads.Add(new ThreadViewModel(thread.Id, thread.TopicName, thread.Content, thread.Author, thread.CreatedAt, thread.LastEdited));
+            threads.Add(new ThreadViewModel(thread.Id, thread.ForumId, thread.TopicName, thread.Content, thread.Author, thread.CreatedAt, thread.LastEdited));
         }
 
         return Ok(threads);    
@@ -44,7 +43,7 @@ public class ThreadsController : ControllerBase
         var result = await _mediator.Send(query);
         if (result != null)
         {
-            var thread = new ThreadViewModel(result.Id, result.TopicName, result.Content, result.Author, result.CreatedAt, result.LastEdited);
+            var thread = new ThreadViewModel(result.Id, result.ForumId, result.TopicName, result.Content, result.Author, result.CreatedAt, result.LastEdited);
             return Ok(thread);
         }
 
@@ -54,7 +53,7 @@ public class ThreadsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult> Create(CreateThreadViewModel createThreadViewModel)
     {
-        var query = new CreateThreadCommand(createThreadViewModel.Author, createThreadViewModel.TopicName, createThreadViewModel.Content);
+        var query = new CreateThreadCommand(createThreadViewModel.ForumId, createThreadViewModel.Author, createThreadViewModel.TopicName, createThreadViewModel.Content);
         var result = await _mediator.Send(query);
 
         if (result == null) return BadRequest();
@@ -62,12 +61,7 @@ public class ThreadsController : ControllerBase
         await _mediator.Publish(new ThreadCreatedNotification()
         {
             Id = result.Id,
-            ForumId = Guid.Empty,
-            TopicName = result.TopicName,
-            Content = result.Content,
-            Author = result.Author,
-            CreatedAt = result.CreatedAt,
-            LastEdited = result.LastEdited
+            ForumId = result.ForumId
         });
 
         return Ok(result);

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ThreadsService.Infrastructure.Contexts;
 
@@ -11,9 +12,11 @@ using ThreadsService.Infrastructure.Contexts;
 namespace ThreadsService.API.Migrations
 {
     [DbContext(typeof(ThreadDbContext))]
-    partial class ThreadDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221202110518_sqlnew")]
+    partial class sqlnew
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

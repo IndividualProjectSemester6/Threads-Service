@@ -40,10 +40,10 @@ builder.Services.AddMassTransit(x =>
 {
     x.UsingRabbitMq((context, cfg) =>
     {
-        cfg.Host("host.docker.internal", "/", h =>
+        cfg.Host(configuration.GetValue<string>("MessageBroker:Host"), configuration.GetValue<string>("MessageBroker:Username"), h =>
         {
-            h.Username("guest");
-            h.Password("guest");
+            h.Username(configuration.GetValue<string>("MessageBroker:Username"));
+            h.Password(configuration.GetValue<string>("MessageBroker:Password"));
         });
 
         cfg.ConfigureEndpoints(context);
