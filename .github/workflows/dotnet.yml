@@ -56,5 +56,4 @@ jobs:
       - name: Setup environment
         id: k6-load-test
         run: |
-          cd ./scripts/
-          ./run_load_test.ps1
+          ./scripts/run_load_test.ps1
