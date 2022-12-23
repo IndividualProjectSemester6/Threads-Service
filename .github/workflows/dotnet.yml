@@ -50,10 +50,11 @@ jobs:
   # Perform load test on the Kubernetes cluster with K6:
   k6_load_test:
     name: K6 Load Test
-    needs: [build-docker-local]
+    #needs: [build-docker-local]
     runs-on: self-hosted
     steps:
       - name: Setup environment
         id: k6-load-test
         run: |
-          ./scripts/run_load_test.ps1
+          ls
+          ./scripts/run_load_test
