@@ -56,6 +56,8 @@ jobs:
     steps:
       - name: Setup environment
         id: k6-load-test
+        shell: powershell
         run: |
           cd "C:\Users\calin\Bureaublad\Fontys\Semester 6\Individueel\Development and Operations\Kinoroom\ThreadsService\"
-          .\scripts\run_load_test
+          echo ${env:PATH}
+          ./scripts/run_load_test.ps1
