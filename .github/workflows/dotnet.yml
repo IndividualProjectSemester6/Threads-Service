@@ -51,8 +51,9 @@ jobs:
   k6_load_test:
     name: K6 Load Test
     #needs: [build-docker-local]
-    runs-on: self-hosted
+    #runs-on: self-hosted
+    runs-on: windows-latest
     steps:
       - name: Setup environment
         id: k6-load-test
-        run: .\scripts\run_load_test.ps1
+        run: ./scripts/run_load_test.ps1
