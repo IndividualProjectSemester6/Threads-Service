@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: threads-api
+  labels:
+    app: threads-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: threads-api
+  template:
+    metadata:
+      labels:
+        app: threads-api
+    spec:
+      containers:
+        - name: threads-api
+          image: localhost:5002/threadsservice:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+          - containerPort: 80
+          resources:
+            requests:
+              cpu: 100m
+              memory: 100Mi
+            limits:
+              cpu: 200m
+              memory: 200Mi
