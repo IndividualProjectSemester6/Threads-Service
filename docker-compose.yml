@@ -1,0 +1,47 @@
+version: '3.3'
+
+services:
+  # Service 1: InfluxDB
+  influxdb:
+    restart: unless-stopped
+    container_name: threads-influxdb
+    image: influxdb:1.8-alpine
+    volumes:
+      - ./influxdb/etc:/etc/influxdb_threads
+    ports:
+      - 8090:8086
+    privileged: true
+    environment:
+      - INFLUXDB_DB=threadsservice
+    networks:
+      threads-network:
+
+  # Service 2: Grafana
+  grafana:
+    image: grafana/grafana
+    container_name: threads-grafana
+    restart: always
+    ports:
+      - 4002:4000
+      - 3001:3000
+    volumes:
+      - grafana_data:/var/lib/grafana_threads
+    environment:
+      -  ASD
+      #- GF_INSTALL_PLUGINS=grafana-k6-app
+    networks:
+      threads-network:
+    depends_on:
+      - influxdb
+
+# Internal network for the containers to use
+networks:
+  threads-network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.2.0/16
+
+# Data volumes for containers to store information in
+volumes:
+  grafana_data:
