@@ -58,6 +58,5 @@ jobs:
         id: k6-load-test
         shell: powershell
         run: |
-          cd "C:\Users\calin\Bureaublad\Fontys\Semester 6\Individueel\Development and Operations\Kinoroom\ThreadsService\"
-          echo ${env:PATH}
+          cd "${{ secrets.ROOT_DIRECTORY }}"
           ./scripts/run_load_test.ps1
