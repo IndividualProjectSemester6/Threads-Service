@@ -40,10 +40,15 @@ builder.Services.AddMassTransit(x =>
 {
     x.UsingRabbitMq((context, cfg) =>
     {
-        cfg.Host(configuration.GetValue<string>("MessageBroker:Host"), configuration.GetValue<string>("MessageBroker:Username"), h =>
+        var hostname = configuration.GetValue<string>("MessageBroker:Host");
+        var vhost = configuration.GetValue<string>("MessageBroker:Vhost");
+        var username = configuration.GetValue<string>("MessageBroker:Username");
+        var password = configuration.GetValue<string>("MessageBroker:Password");
+
+        cfg.Host(hostname, vhost, h =>
         {
-            h.Username(configuration.GetValue<string>("MessageBroker:Username"));
-            h.Password(configuration.GetValue<string>("MessageBroker:Password"));
+            h.Username(username);
+            h.Password(password);
         });
 
         cfg.ConfigureEndpoints(context);
