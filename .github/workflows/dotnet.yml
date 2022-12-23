@@ -57,5 +57,5 @@ jobs:
       - name: Setup environment
         id: k6-load-test
         run: |
-          cd "C:\Users\calin\Bureaublad\Fontys\Semester 6\Individueel\Development and Operations\Kinoroom\"
+          cd "C:\Users\calin\Bureaublad\Fontys\Semester 6\Individueel\Development and Operations\Kinoroom\ThreadsService\"
           .\scripts\run_load_test
