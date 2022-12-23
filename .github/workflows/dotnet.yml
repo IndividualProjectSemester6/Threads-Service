@@ -54,4 +54,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Setup environment
-        run: ./scripts/run_load_test
+        id: k6-load-test
+        run: |
+          cd ./scripts/
+          ./run_load_test.ps1
