@@ -55,4 +55,4 @@ jobs:
     steps:
       - name: Setup environment
         id: k6-load-test
-        run: scripts\run_load_test.ps1
+        run: .\scripts\run_load_test.ps1
