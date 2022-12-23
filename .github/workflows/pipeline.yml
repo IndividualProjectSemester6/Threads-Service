@@ -54,7 +54,7 @@ jobs:
           tags: ${{ secrets.DOCKER_USERNAME }}/threads-api:latest
 
   # Perform load test on the Kubernetes cluster with K6:
-  k6_load_test:
+  k6-load-test:
     name: K6 Load Test
     needs: [build-docker-local]
     runs-on: self-hosted
