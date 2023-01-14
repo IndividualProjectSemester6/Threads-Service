@@ -1,5 +1,5 @@
 import http from 'k6/http';
-import { sleep } from 'k6';
+import { check, sleep } from 'k6';
 
 // Configuration options for the load test.
 export const options = {
@@ -16,8 +16,11 @@ export const options = {
 // Script for load test:
 export default function() {
     // Local:
-    //const res = http.get('http://10.136.0.115:80/movies-service/api/Movies')
+    const res = http.get('http://192.168.2.6:80/threads-service/api/Threads')
     // Azure:
-    const res = http.get('http://20.238.149.147/threads-service/api/Threads');
-    sleep(10);
+    //const res = http.get('http://20.238.149.147/threads-service/api/Threads');
+    check(res, {
+        'is status 200': (r) => r.status === 200
+    })
+    sleep(Math.random() * 5);
 }
