@@ -21,8 +21,8 @@ export default function() {
 
     }
     // Local:
-    const res = http.post('http://localhost:80/threads-service/api/Threads', data)
+    //const res = http.post('http://localhost:80/threads-service/api/Threads', data)
     // Azure:
-    //const res = http.get('http://20.238.149.147/threads-service/api/Threads');
+    const res = http.get('http://20.238.149.147/threads-service/api/Threads');
     sleep(1);
 }
