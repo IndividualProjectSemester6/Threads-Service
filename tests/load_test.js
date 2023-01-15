@@ -24,5 +24,5 @@ export default function() {
     const res = http.post('http://localhost:80/threads-service/api/Threads', data)
     // Azure:
     //const res = http.get('http://20.238.149.147/threads-service/api/Threads');
-    sleep(Math.random() * 5);
+    sleep(1);
 }
